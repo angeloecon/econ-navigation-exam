@@ -1,20 +1,44 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native'
+import { createBottomTabNavigator} from '@react-navigation/bottom-tabs'
+import { createNativeStackNavigator } from '@react-navigation/native-stack'
 
-export default function App() {
+import HomeScreen from './screens/HomeScreen'
+import ProfilePage from './screens/ProfileScreen'
+
+import LoginScreen from './screens/LoginScreen'
+import RegisterScreen from './screens/RegisterScreen'
+
+const RootTab = createBottomTabNavigator();
+const MainTab = createNativeStackNavigator();
+
+const LoginStack = createNativeStackNavigator();
+const RegisterStack = createNativeStackNavigator();
+
+const HomeStack = createNativeStackNavigator();
+const ProfileStack = createNativeStackNavigator();
+
+function MainTabNavigator () {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
+    <RootTab.Navigator screenOptions={{headerShown: true}}>
+      <RootTab.Screen name='HomePage' component={HomeScreen}/>
+      <RootTab.Screen  name='ProfilePage' component={ProfilePage}/>
+    </RootTab.Navigator>
+  )
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+function LoginStackNavigator() {
+
+}
+
+export default function App() {
+  return(
+    <NavigationContainer>
+      <MainTab.Navigator screenOptions={{headerShown:false}}>
+        <MainTab.Screen name='LoginPage' component={LoginScreen}/>
+        <MainTab.Screen name='RegisterPage' component={RegisterScreen} />
+
+        <MainTab.Screen name='MainPages' component={MainTabNavigator}/>
+      </MainTab.Navigator>
+    </NavigationContainer>
+  )
+}
